@@ -287,6 +287,10 @@ class OmxInstance {
 			args.push(settings.aspectMode);
 		}
 
+		if (settings.blank === true) { // defaults to false
+			args.push('--blank');
+		}
+
 		let finalOpenCommand = command+' '+args.join(' ')+' < omxpipe'+this.layer;
 		console.log('finalOpenCommand:', finalOpenCommand);
 
