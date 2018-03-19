@@ -247,6 +247,10 @@ class OmxInstance {
 			args.push('--no-keys')
 		}
 
+		if (settings.blank === true) { // defaults to false
+			args.push('--blank');
+		}
+
 		if (settings.disableOnScreenDisplay === true) { //defaults to  false
 			args.push('--no-osd')
 		}
@@ -285,10 +289,6 @@ class OmxInstance {
 		if (settings.aspectMode) {
 			args.push('--aspect-mode');
 			args.push(settings.aspectMode);
-		}
-
-		if (settings.blank === true) { // defaults to false
-			args.push('--blank');
 		}
 
 		let finalOpenCommand = command+' '+args.join(' ')+' < omxpipe'+this.layer;
