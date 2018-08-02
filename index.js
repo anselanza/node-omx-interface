@@ -278,6 +278,16 @@ class OmxInstance {
 			args.push(settings.layer);
 		}
 
+		if (settings.align) {
+			args.push('--align');
+			args.push(settings.align);
+		}
+
+		if (settings.fontSize) {
+			args.push('--font-size');
+			args.push(settings.fontSize);
+		}
+
 		if (holdMode) {
 			args.push('--alpha');
 			args.push(0);
