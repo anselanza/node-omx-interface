@@ -71,7 +71,6 @@ If your player appears to quit video files without even trying to play them, you
 * `blackBackground`: boolean, false by default (careful enabling this when layering, or you might get strange intermittent screen blanking)
 * `backgroundARGB`: a hexadecimal colour value for Alpha, Red, Green, Blue - this is an alternative to using the default black. For example, if you want a full white background, use `ffffffff` and for full red use `ffff0000`, etc. This **should only be applied to layer 1**, not higher layers, in order to avoid flickering.
 * `layer`: 1-infinity (2 is probably enough!); if omitted then clips will automatically player on layer 0
-* `disableKeys`: boolean, false by default
 * `disableOnScreenDisplay`:  boolean, false by default
 
 
