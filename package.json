@@ -1,6 +1,6 @@
 {
   "name": "omx-layers",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "description": "Layer multiple omxplayer instances and control them via D-Bus",
   "main": "index.js",
   "scripts": {
