@@ -304,37 +304,44 @@ class OmxInstance {
 		let finalOpenCommand = command+' '+args.join(' ')+' < omxpipe'+this.layer;
 		console.log('finalOpenCommand:', finalOpenCommand);
 
-		if (this.shouldBePlaying) {
-			console.error('omx-layers was instructed to open, but playback is (?) already in progress');
-		} else {
+		return new Promise( (resolve, reject) => {
+			if (this.shouldBePlaying) {
+				console.error('omx-layers was instructed to open, but playback is (?) already in progress');
+				reject('shouldBePlaying conflict');
+			} else {
+	
+				exec(finalOpenCommand, (error, stdout, stderr) => {
+					// This block executes on clip end...
+					this.cancelProgressHandlerIfActive();
+					if (this.onDoneCallback) this.onDoneCallback.apply();
+					console.log('omxpipe done for layer', this.layer);
+					console.log(`final output from omxplayer: \n${stdout}\n.`);
+					this.shouldBePlaying = false;
+					this.cachedDuration = null;
+				});
+	
+				exec(' . > omxpipe'+this.layer, (error, stdout, stderr) => {
+					// This block executes as soon as pipe is ready...
+					this.waitTillPlaying()
+						.then( (elapsed) => {
+							console.info('confirmed started ok');
+							if (this.onStartCallback) this.onStartCallback.apply();
+							if (holdMode) {
+								console.log('holdMode ON, so immediately pause and hide');
+								this.pause();
+								this.setVisibility(false);
+							}
+							resolve();
+						})
+						.catch ( () => {
+							console.error('failed to confirm clip start!');
+							reject('error on clip start');
+						});
+				});
+			}
+		});
 
-			exec(finalOpenCommand, (error, stdout, stderr) => {
-				// This block executes on clip end...
-				this.cancelProgressHandlerIfActive();
-				if (this.onDoneCallback) this.onDoneCallback.apply();
-				console.log('omxpipe done for layer', this.layer);
-				console.log(`final output from omxplayer: \n${stdout}\n.`);
-				this.shouldBePlaying = false;
-				this.cachedDuration = null;
-			});
-
-			exec(' . > omxpipe'+this.layer, (error, stdout, stderr) => {
-				// This block executes as soon as pipe is ready...
-				this.waitTillPlaying()
-					.then( (elapsed) => {
-						console.info('confirmed started ok');
-						if (this.onStartCallback) this.onStartCallback.apply();
-						if (holdMode) {
-							console.log('holdMode ON, so immediately pause and hide');
-							this.pause();
-							this.setVisibility(false);
-						}
-					})
-					.catch ( () => {
-						console.error('failed to confirm clip start!');
-					});
-			});
-		}
+	
 
 
 	}
