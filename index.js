@@ -247,6 +247,10 @@ class OmxInstance {
 			args.push('--no-keys')
 		}
 
+		if (settings.blank === true) { // defaults to false
+			args.push('--blank');
+		}
+
 		if (settings.disableOnScreenDisplay === true) { //defaults to  false
 			args.push('--no-osd')
 		}
@@ -272,6 +276,16 @@ class OmxInstance {
 		if (settings.layer) {
 			args.push('--layer');
 			args.push(settings.layer);
+		}
+
+		if (settings.align) {
+			args.push('--align');
+			args.push(settings.align);
+		}
+
+		if (settings.fontSize) {
+			args.push('--font-size');
+			args.push(settings.fontSize);
 		}
 
 		if (holdMode) {
