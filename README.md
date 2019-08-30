@@ -31,9 +31,7 @@ let player = new omx({
 ```
 Then play a clip like this:
 ```
-player.open('myclip.mp4', () => {
-	console.log('playback finished!');
-});
+player.open('myclip.mp4');
 ```
 
 ## Multiple players, multiple layers
@@ -92,8 +90,10 @@ Get current position via D-Bus (if currently playing) in milliseconds.
 # Methods
 
 ## Open (play) a new clip
-`layer.open(path)`
+`layer.open(path, holdMode = false)`
 Open and start a clip at the given path. If you try to open another clip while one is already playing, this will be logged and ignored.
+
+If `holdMode===true`, then clip will immediately pause on load and set opacity to 0 (waiting for your command).
 
 ## Jump to point in file/seek relative to current position (-Inf to +Inf)
 `layer.seekRelative(milliseconds);`
@@ -116,10 +116,10 @@ The callback sends a single object containing `position`, `duration` and `playSt
 
 Example:
 ```
-layer.onProgress( (info) => {
+layer.onProgress = (info) => {
 	console.log(`layer is at ${info.position} / ${info.duration}; currently ${info.status}`);
 	// will output something like: layer is at 2500 / 10000; currently playing
-})
+}
 ```
 
 ## Stop playing
