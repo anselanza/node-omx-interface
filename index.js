@@ -91,7 +91,7 @@ class OmxInstance {
 
 	setAbsolute (position) {
 		//position in milliseconds from start; //positions larger than the duration will stop the player;
-		exec(this.dbusCommand('setposition '+position), (error, stdout, stderr) => {
+		exec(this.dbusCommand('setposition '+Math.round(offset*1000)), (error, stdout, stderr) => {
 			if (error) console.error('setAbsolute() error:', error);
 		});
 	}
