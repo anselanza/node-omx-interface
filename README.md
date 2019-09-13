@@ -1,3 +1,7 @@
+**DEPRECATION WARNING**
+Please use the much more sophisticated (and stable) successor this library: [omxconductor](https://github.com/RandomStudio/omxconductor)
+
+__
 
 # omx-layers (Node.js)
 An interface for Node.js allowing you to layer multiple [omxplayer](https://github.com/popcornmix/omxplayer) instances and control them in-process via the low-latency interprocess communication protocol, D-Bus.
